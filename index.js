@@ -1,15 +1,13 @@
-console.log("hello");
-const Key ="48b49240e19d31e21c29538d0ca220bc";
-async function showWeather(){
-    const city = "sitapur";
-    const response =await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${Key}`);
-    const data =await response.json();
-    console.log(data);
+const userTab = document.querySelector("[data-userWeather]");
+const searchTab = document.querySelector("[data-searchWeather]");
+const userContainer = document.querySelector(".weather-container");
+const grantAccessContainer = document.querySelector(".grant-location-container");
+const searchForm =document.querySelector("[data-searchForm]");
+const loadingScreen = document.querySelector(".loading-container");
+const userInfoContainer = document.querySelector(".user-info-container");
 
-    let newPara = document.createElement('p');
-    newPara.textContent = `${data?.main?.temp.toFixed(2)} *C`
-    document.body.append(newPara);
+const API_key = "48b49240e19d31e21c29538d0ca220bc";
+let currTab = userTab;
+currTab.classList.add("current-tab");
 
 
-}
-showWeather();
