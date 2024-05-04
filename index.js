@@ -11,3 +11,28 @@ let currTab = userTab;
 currTab.classList.add("current-tab");
 
 
+function switchTab(clickedTab){
+    if (clickedTab != currTab){
+        currTab.classList.remove("current-tab");
+        currTab = clickedTab;
+        currTab.classList.add("current-tab");
+
+        if (!searchForm.classList.contains("active")){
+            userInfoContainer.classList.remove("active");
+            grantAccessContainer.classList.remove("active");
+            searchForm.classList.add("active");
+        }else{
+            searchForm.classList.remove("active");
+            userInfoContainer.classList.remove("active");
+            getfromSessionStorage();
+        }
+    }
+}
+userTab.addEventListener("click",()=>{
+    switchTab(userTab);
+    
+
+});
+searchTab.addEventListener("click",()=>{
+    switchTab(searchTab);
+});
