@@ -9,7 +9,7 @@ const userInfoContainer = document.querySelector(".user-info-container");
 const API_key = "48b49240e19d31e21c29538d0ca220bc";
 let currTab = userTab;
 currTab.classList.add("current-tab");
-
+getfromSessionStorage(); 
 
 function switchTab(clickedTab){
     if (clickedTab != currTab){
@@ -30,7 +30,7 @@ function switchTab(clickedTab){
 }
 
 function getfromSessionStorage(){
-    const localCordinates = sessionStorage.getItems("user-coordinates");
+    const localCordinates = sessionStorage.getItem("user-coordinates");
     if (!localCordinates){
         grantAccessContainer.classList.add("active");
     }else{
@@ -83,6 +83,8 @@ function renderWeatherInfo(weatherInfo){
     cloudiness.innerText = weatherInfo?.clouds?.all;
 }
 
+const grantAccessBtn = document.querySelector("[data-grantAccess]");
+grantAccessBtn.addEventListener("click" , getLocation);
 function getLocation(){
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -99,6 +101,25 @@ function showPosition(position){
     sessionStorage.setItem("user-coordinates" , JSON.stringify(userCoordinates));
     fetchWeatherInfo(userCoordinates);
 }
+let searchInput = document.querySelector("[data-searchInput]");
+searchForm.addEventListener("submit" , (e)=>{
+    e.preventDefault();
+    let cityName = searchInput.value;
+    if (cityName === "") return;
+    else fetchSearchInfo(cityName);
 
-const grantAccessBtn = document.querySelector("[data-grantAccess]");
-grantAccessBtn.addEventListener("click" , getLocation);
+});
+async function fetchSearchInfo(city){
+    loadingScreen.classList.add("active");
+    userInfoContainer.classList.remove("active");
+    grantAccessContainer.classList.remove("active");
+    try{
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_key}`);
+        const data = await response.json();
+        userInfoContainer.classList.add("active");
+        renderWeatherInfo(data);
+    }
+    catch(err){
+        
+    }
+}
