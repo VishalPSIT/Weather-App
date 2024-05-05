@@ -13,6 +13,7 @@
 }
 
 #wrapper{
+    position: relative;
     width: 100vw;
     height: 100vh;
     color: var(--colorLight2);
@@ -195,7 +196,18 @@ h1{
     border-radius: 10 px;
     margin-bottom: 1px;
 }
-
+.credits{
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem; 
+    display: flex;
+    gap: 2rem;
+}
+.credits img{
+    margin-top: 5.5px;
+    height: 15px;
+    width: 15px;
+}
 /*
 .form-container.active{
     scale:1;
